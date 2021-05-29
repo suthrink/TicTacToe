@@ -129,12 +129,12 @@ const boxClicked = (e) =>{
 if(!spaces[id]){
     spaces[id] = currentPlayer;
     e.target.innerText = currentPlayer;
-    currentPlayer = currentPlayer === O_Text ? X_Text : O_Text;
      }
      if(playerHasWon()){
       playText.innerHTML = currentPlayer + '   has won!';
       return;
     }
+        currentPlayer = currentPlayer === O_Text ? X_Text : O_Text;
 console.log(spaces);
     if(spaces[id]===O_Text){
       count++;
