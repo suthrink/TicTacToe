@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<head>
+    <title>Game</title>
+    <meta charset="UTF-8">
+    <meta name="veiwport" content="width=device-width, initial-scale=1.0"> 
+    <title>Tic Tac Toe </title>
+    <style>
+      :root {
+        --purple: #3e0249;
+      }
+     body {
+         margin:0;
+         padding:0 ;
+         color: var(--purple);
+         font-family: sans-serif;
+      }
+      *{
+        box-sizing:border-box ;
+      }
+      h1{
+        font-size: 54px;
+        text-transform: uppercase;
+      }
+    .container{
+        padding: 40px;
+        height:100vh;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    
+      #gameboard {
+        width: 450px;
+        display:flex;
+        flex-wrap: wrap;
+        margin-top: 40px;
+      }
+    
+      .box{
+        height: 150px;
+        width: 150px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 150px;
+        color: var(--purple);
+        font-size: 100px;
+      }
+    
+      .box:hover {
+      cursor: pointer;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background-color: var(--purple);
+      color: white;
+      border-color: var(--purple);
+      font-size: 18px;
+      transition: 200ms transform;
+    }
+    
+    button:hover {
+      cursor: pointer;
+      transform: translateY(-2px);
+    }
+    </style>
+</head>
+
+<body>
+
+</body>
+<div class="container">
+  <h1 id="playText">Lets Play</h1>
+  <button id="restartBtn">Restart</button>
+  <div id="gameboard">
+    <div class="box" id="0"></div>
+    <div class="box" id="1"></div>
+    <div class="box" id="2"></div>
+    <div class="box" id="3"></div>
+    <div class="box" id="4"></div>
+    <div class="box" id="5"></div>
+    <div class="box" id="6"></div>
+    <div class="box" id="7"></div>
+    <div class="box" id="8"></div>
+  </div>
+</div>
+<script>
+const boxes = Array.from(document.getElementsByClassName("box"));
+var spaces = [];
+var count  = 0;
+
+const playText=document.getElementById("playText");
+const restartBtn=document.getElementById("restartBtn");
+const O_Text = "0";
+const X_Text = "X";
+let currentPlayer = O_Text;
+console.log(boxes);
+const drawBoard= ()=>{
+  boxes.forEach((box,index)=>{
+    let styleString="";
+    if(index<3){
+      styleString += 'border-bottom: 3px solid var(--purple);';
+}
+if(index % 3 === 0){
+  styleString += 'border-right: 3px solid var(--purple);';
+
+}
+if(index % 3 === 2){
+  styleString += 'border-left: 3px solid var(--purple);';
+}
+
+if(index > 5){
+  styleString += 'border-top: 3px solid var(--purple);';
+}
+
+box.style = styleString;
+
+box.addEventListener('click' , boxClicked);
+
+  });
+};
+
+const boxClicked = (e) =>{
+  console.log("box clicked");
+  const id= e.target.id;
+if(!spaces[id]){
+    spaces[id] = currentPlayer;
+    e.target.innerText = currentPlayer;
+    currentPlayer = currentPlayer === O_Text ? X_Text : O_Text;
+     }
+     if(playerHasWon()){
+      playText.innerHTML = currentPlayer + '   has won!';
+      return;
+    }
+console.log(spaces);
+    if(spaces[id]===O_Text){
+      count++;
+       console.log(count);
+    if(count>4){
+          playText.innerHTML='Its A Tie!';      
+         }
+        }
+    
+   }
+         
+const playerHasWon = () =>{
+  //top left and daigonal
+if(spaces[0]===currentPlayer){
+    if(spaces[1]===currentPlayer && spaces[2]===currentPlayer){
+      console.log(currentPlayer +  '   wins up top!');
+      return true;
+    }if(spaces[3]===currentPlayer && spaces[6]===currentPlayer){
+      console.log(currentPlayer +  '   wins left!');
+      return true;
+    }
+    if(spaces[4]===currentPlayer && spaces[8]===currentPlayer){
+      console.log(currentPlayer +  '   wins right diagonally!');
+      return true;
+    }
+}
+//  daigonal
+ if(spaces[2]===currentPlayer){
+    if(spaces[4]===currentPlayer && spaces[6]===currentPlayer){
+      console.log(currentPlayer +  '   wins left daigonal!');
+      return true;
+    }
+  }
+// right and bottom
+ if(spaces[8]===currentPlayer){
+    if(spaces[5]===currentPlayer && spaces[2]===currentPlayer){
+      console.log(currentPlayer +  '   wins up right!');
+      return true;
+    }if(spaces[7]===currentPlayer && spaces[6]===currentPlayer){
+      console.log(currentPlayer +  '    wins bottom!');
+      return true;
+    }
+}
+ if(spaces[4]===currentPlayer){
+    if(spaces[1]===currentPlayer && spaces[7]===currentPlayer){
+      console.log(currentPlayer +  '   wins vertical!');
+      return true;
+    }if(spaces[3]===currentPlayer && spaces[5]===currentPlayer){
+      console.log(currentPlayer +  '   wins horizontal!');
+      return true;
+    }
+   }
+};
+const restart = ()=>{
+  while (spaces.length > 0) {
+    spaces.pop();
+
+}
+  boxes.forEach((box)=>{
+    box.innerHTML= '';
+  });
+  playText.innerHTML= 'Lets Play!';
+ currentPlayer=O_Text;
+  count=0;
+}
+
+restartBtn.addEventListener('click',restart);
+
+restart();
+
+ drawBoard();
+</script>
+</html>
