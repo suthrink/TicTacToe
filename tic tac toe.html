@@ -129,7 +129,7 @@ const boxClicked = (e) =>{
 if(!spaces[id]){
     spaces[id] = currentPlayer;
     e.target.innerText = currentPlayer;
-     }
+     
      if(playerHasWon()){
       playText.innerHTML = currentPlayer + '   has won!';
       return;
@@ -143,7 +143,7 @@ console.log(spaces);
           playText.innerHTML='Its A Tie!';      
          }
         }
-    
+}
    }
          
 const playerHasWon = () =>{
