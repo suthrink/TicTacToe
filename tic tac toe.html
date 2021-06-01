@@ -66,6 +66,10 @@
       cursor: pointer;
       transform: translateY(-2px);
     }
+
+    .win{
+      background-color: orange;
+    }
     </style>
 </head>
 
@@ -129,9 +133,10 @@ const boxClicked = (e) =>{
 if(!spaces[id]){
     spaces[id] = currentPlayer;
     e.target.innerText = currentPlayer;
-     
      if(playerHasWon()){
       playText.innerHTML = currentPlayer + '   has won!';
+      playText.style.color="purple";
+      playText.style.backgroundColor="orange";
       return;
     }
         currentPlayer = currentPlayer === O_Text ? X_Text : O_Text;
@@ -151,13 +156,23 @@ const playerHasWon = () =>{
 if(spaces[0]===currentPlayer){
     if(spaces[1]===currentPlayer && spaces[2]===currentPlayer){
       console.log(currentPlayer +  '   wins up top!');
+      boxes[0].classList.add("win");
+      boxes[1].classList.add("win");
+      boxes[2].classList.add("win");
       return true;
     }if(spaces[3]===currentPlayer && spaces[6]===currentPlayer){
       console.log(currentPlayer +  '   wins left!');
+      boxes[0].classList.add("win");
+      boxes[3].classList.add("win");
+      boxes[6].classList.add("win");
       return true;
     }
     if(spaces[4]===currentPlayer && spaces[8]===currentPlayer){
       console.log(currentPlayer +  '   wins right diagonally!');
+      boxes[0].classList.add("win");
+      boxes[4].classList.add("win");
+      boxes[8].classList.add("win");
+      return true;
       return true;
     }
 }
@@ -165,6 +180,9 @@ if(spaces[0]===currentPlayer){
  if(spaces[2]===currentPlayer){
     if(spaces[4]===currentPlayer && spaces[6]===currentPlayer){
       console.log(currentPlayer +  '   wins left daigonal!');
+      boxes[2].classList.add("win");
+      boxes[4].classList.add("win");
+      boxes[6].classList.add("win");
       return true;
     }
   }
@@ -172,18 +190,30 @@ if(spaces[0]===currentPlayer){
  if(spaces[8]===currentPlayer){
     if(spaces[5]===currentPlayer && spaces[2]===currentPlayer){
       console.log(currentPlayer +  '   wins up right!');
+      boxes[2].classList.add("win");
+      boxes[5].classList.add("win");
+      boxes[8].classList.add("win");
       return true;
     }if(spaces[7]===currentPlayer && spaces[6]===currentPlayer){
       console.log(currentPlayer +  '    wins bottom!');
+      boxes[6].classList.add("win");
+      boxes[7].classList.add("win");
+      boxes[8].classList.add("win");
       return true;
     }
 }
  if(spaces[4]===currentPlayer){
     if(spaces[1]===currentPlayer && spaces[7]===currentPlayer){
       console.log(currentPlayer +  '   wins vertical!');
+      boxes[1].classList.add("win");
+      boxes[4].classList.add("win");
+      boxes[7].classList.add("win");
       return true;
     }if(spaces[3]===currentPlayer && spaces[5]===currentPlayer){
       console.log(currentPlayer +  '   wins horizontal!');
+      boxes[3].classList.add("win");
+      boxes[4].classList.add("win");
+      boxes[5].classList.add("win");
       return true;
     }
    }
@@ -195,10 +225,13 @@ const restart = ()=>{
 }
   boxes.forEach((box)=>{
     box.innerHTML= '';
+    box.classList.remove("win");
   });
   playText.innerHTML= 'Lets Play!';
  currentPlayer=O_Text;
   count=0;
+  playText.style.removeProperty('color');
+  playText.style.removeProperty('background-color');
 }
 
 restartBtn.addEventListener('click',restart);
